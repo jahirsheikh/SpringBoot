@@ -1,0 +1,5 @@
+com\mycompany\stucrud\dao\StudentDao.class
+com\mycompany\stucrud\dao\StudentDao$1.class
+com\mycompany\stucrud\model\Student.class
+com\mycompany\stucrud\controller\StudentController.class
+.netbeans_automatic_build
