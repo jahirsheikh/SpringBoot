@@ -12,4 +12,9 @@ public class Home {
 
         return "home";
     }
+    @GetMapping("/page")
+    public String page(){
+
+        return "page";
+    }
 }
