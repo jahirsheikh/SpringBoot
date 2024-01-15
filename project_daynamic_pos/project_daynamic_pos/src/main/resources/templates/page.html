@@ -1,5 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add your stylesheet links or any other head elements here -->
+</head>
+<body>
+
 <div th:insert="header2.html"></div>
 <div class="px-3">
-    <h5> this is page one</h5>
+    <table class="table" id="myTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Unit</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
 </div>
+
 <div th:insert="footer2.html"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fetch data from Spring Boot API
+        fetch('http://localhost:8080/api/products')
+            .then(response => response.json())
+            .then(data => {
+                // Populate the table with data and input fields
+                const tbody = document.getElementById('tableBody');
+
+                for (const product of data) {
+                    const row = tbody.insertRow();
+                    row.insertCell().innerText = product.id;
+
+                    // Add input field for Name
+                    const nameCell = row.insertCell();
+                    const nameInput = document.createElement('input');
+                    nameInput.type = 'text';
+                    nameInput.name = 'name'; // Add name attribute
+                    nameInput.value = product.name;
+                    nameInput.addEventListener('input', calculateTotalPrice);
+                    nameCell.appendChild(nameInput);
+
+                    // Add dropdown for Brand
+                    const brandCell = row.insertCell();
+                    const brandSelect = document.createElement('select');
+                    const brandOptions = ['Brand 1', 'Brand 2', 'Brand 3']; // Add your brand options here
+
+                    for (const option of brandOptions) {
+                        const brandOption = document.createElement('option');
+                        brandOption.value = option;
+                        brandOption.innerText = option;
+                        brandSelect.appendChild(brandOption);
+                    }
+
+                    brandSelect.value = product.brand;
+                    brandCell.appendChild(brandSelect);
+
+                    row.insertCell().innerText = product.unit;
+
+                    // Add input field for Price
+                    const priceCell = row.insertCell();
+                    const priceInput = document.createElement('input');
+                    priceInput.type = 'number';
+                    priceInput.name = 'price'; // Add name attribute
+                    priceInput.value = product.price;
+                    priceInput.addEventListener('input', calculateTotalPrice);
+                    priceCell.appendChild(priceInput);
+
+                    // Add input field for Quantity
+                    const quantityCell = row.insertCell();
+                    const quantityInput = document.createElement('input');
+                    quantityInput.type = 'number';
+                    quantityInput.name = 'quantity'; // Add name attribute
+                    quantityInput.value = 1;
+                    quantityInput.addEventListener('input', calculateTotalPrice);
+                    quantityCell.appendChild(quantityInput);
+
+                    row.insertCell(); // This cell will be used for total price, initially empty
+                }
+
+                // Calculate and update the total price initially
+                calculateTotalPrice();
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    });
+
+    // Function to calculate total price and update the table
+    function calculateTotalPrice() {
+        const table = document.getElementById('myTable');
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            const unit = parseInt(rows[i].getElementsByTagName('td')[3].innerText);
+            const price = parseFloat(rows[i].querySelector('input[type="number"][name="price"]').value);
+            const quantity = parseInt(rows[i].querySelector('input[type="number"][name="quantity"]').value);
+
+            const totalPrice = quantity * price;
+
+            rows[i].getElementsByTagName('td')[6].innerText = totalPrice.toFixed(2);
+        }
+    }
+</script>
+
+</body>
+</html>
