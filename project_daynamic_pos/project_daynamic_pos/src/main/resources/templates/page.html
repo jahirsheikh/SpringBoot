@@ -6,6 +6,7 @@
 <body>
 
 <div th:insert="header2.html"></div>
+
 <div class="px-3">
     <table class="table" id="myTable">
         <thead>
@@ -19,94 +20,47 @@
             <th>Total Price</th>
         </tr>
         </thead>
-        <tbody id="tableBody"></tbody>
+        <tbody id="tableBody">
+        <tr th:each="product : ${products}">
+         <td th:text="${product.id}"> </td>
+         <td th:text="${product.name}"> </td>
+         <td th:text="${product.brand}"> </td>
+         <td th:text="${product.unit}"> </td>
+         <td th:text="${product.price}"> </td>
+         <td th:text="${product.quantity}"> </td>
+         <td th:text="${product.total}"> </td>
+
+        </tr>
+
+        </tbody>
     </table>
 </div>
 
 <div th:insert="footer2.html"></div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Fetch data from Spring Boot API
-        fetch('http://localhost:8080/api/products')
-            .then(response => response.json())
-            .then(data => {
-                // Populate the table with data and input fields
-                const tbody = document.getElementById('tableBody');
+    document.addEventListener("DOMContentLoaded", function() {
+        var quantityInputs = document.querySelectorAll(".quantityInput");
 
-                for (const product of data) {
-                    const row = tbody.insertRow();
-                    row.insertCell().innerText = product.id;
-
-                    // Add input field for Name
-                    const nameCell = row.insertCell();
-                    const nameInput = document.createElement('input');
-                    nameInput.type = 'text';
-                    nameInput.name = 'name'; // Add name attribute
-                    nameInput.value = product.name;
-                    nameInput.addEventListener('input', calculateTotalPrice);
-                    nameCell.appendChild(nameInput);
-
-                    // Add dropdown for Brand
-                    const brandCell = row.insertCell();
-                    const brandSelect = document.createElement('select');
-                    const brandOptions = ['Brand 1', 'Brand 2', 'Brand 3']; // Add your brand options here
-
-                    for (const option of brandOptions) {
-                        const brandOption = document.createElement('option');
-                        brandOption.value = option;
-                        brandOption.innerText = option;
-                        brandSelect.appendChild(brandOption);
-                    }
-
-                    brandSelect.value = product.brand;
-                    brandCell.appendChild(brandSelect);
-
-                    row.insertCell().innerText = product.unit;
-
-                    // Add input field for Price
-                    const priceCell = row.insertCell();
-                    const priceInput = document.createElement('input');
-                    priceInput.type = 'number';
-                    priceInput.name = 'price'; // Add name attribute
-                    priceInput.value = product.price;
-                    priceInput.addEventListener('input', calculateTotalPrice);
-                    priceCell.appendChild(priceInput);
-
-                    // Add input field for Quantity
-                    const quantityCell = row.insertCell();
-                    const quantityInput = document.createElement('input');
-                    quantityInput.type = 'number';
-                    quantityInput.name = 'quantity'; // Add name attribute
-                    quantityInput.value = 1;
-                    quantityInput.addEventListener('input', calculateTotalPrice);
-                    quantityCell.appendChild(quantityInput);
-
-                    row.insertCell(); // This cell will be used for total price, initially empty
-                }
-
-                // Calculate and update the total price initially
-                calculateTotalPrice();
-            })
-            .catch(error => console.error('Error fetching data:', error));
+        quantityInputs.forEach(function(input) {
+            input.addEventListener("input", function() {
+                updateTotal(this);
+            });
+        });
     });
 
-    // Function to calculate total price and update the table
-    function calculateTotalPrice() {
-        const table = document.getElementById('myTable');
-        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    function updateTotal(input) {
+        var row = input.closest("tr");
+        var price = parseFloat(row.querySelector("td:nth-child(5)").innerText);
+        var quantity = parseFloat(input.value) || 0; // Use 0 if the input is not a valid number
+        var total = price * quantity;
 
-        for (let i = 0; i < rows.length; i++) {
-            const unit = parseInt(rows[i].getElementsByTagName('td')[3].innerText);
-            const price = parseFloat(rows[i].querySelector('input[type="number"][name="price"]').value);
-            const quantity = parseInt(rows[i].querySelector('input[type="number"][name="quantity"]').value);
-
-            const totalPrice = quantity * price;
-
-            rows[i].getElementsByTagName('td')[6].innerText = totalPrice.toFixed(2);
+        if (!isNaN(total)) { // Check if total is a valid number
+            row.querySelector("td:nth-child(7)").innerText = total.toFixed(2);
         }
     }
 </script>
+
 
 </body>
 </html>
