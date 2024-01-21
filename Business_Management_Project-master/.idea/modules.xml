@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.org.eclipse.egit.core.cmp.iml" filepath="$PROJECT_DIR$/.org.eclipse.egit.core.cmp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BusinessProject.iml" filepath="$PROJECT_DIR$/BusinessProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Business_Management_Project-master.iml" filepath="$PROJECT_DIR$/Business_Management_Project-master.iml" />
+    </modules>
+  </component>
+</project>

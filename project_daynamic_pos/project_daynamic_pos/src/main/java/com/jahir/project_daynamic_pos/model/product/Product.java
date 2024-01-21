@@ -8,9 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Builder
 @ToString
-@EqualsAndHashCode
+
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +30,6 @@ public class Product {
     private double price;
 
     private double totalPrice;
-
-
-
-
 
 
 }
