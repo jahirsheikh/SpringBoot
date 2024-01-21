@@ -1,6 +1,9 @@
 package com.chumbok.pos.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -11,6 +14,9 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "Product")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Product {
 
     @Column(name = "id")
