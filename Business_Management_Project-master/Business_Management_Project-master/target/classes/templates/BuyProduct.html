@@ -8,7 +8,7 @@
 </head>
 <style>
 	body {
-		background-color: green;
+		background-color: darkgray;
 	}
 
 	* {
@@ -28,7 +28,7 @@
 	.searchInput button {
 		padding: 15px;
 		width: 100px;
-		background-color: red;
+		background-color: silver;
 	}
 
 	.details {
@@ -82,7 +82,7 @@
 			</marquee><br />
 	</div>
 	
-	<a href="/login">Back</a>
+	<a href="/products">Back</a>
 	<center>
 
 		<form action="" th:action="@{/product/search}" method="post" class="searchInput">
@@ -99,7 +99,7 @@
 				Product Price :
 				<input type="text" value="" name="oPrice" th:value="${product.pprice}" readonly /><br />
 				Quqntity :
-				<input type="number" placeholder="Minimun: 1KG" min="1" name="oQuantity" /><br />
+				<input type="number" placeholder="Minimun: 1 item" min="1" name="oQuantity" /><br />
 
 				<button type="submit">Order_Now</button>
 			</form>

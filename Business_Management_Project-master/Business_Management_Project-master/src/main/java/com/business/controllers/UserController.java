@@ -2,6 +2,7 @@ package com.business.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,21 @@ public class UserController
 {
 	@Autowired
 	private UserServices services;
+
+
+	private  User user;
+
+
+
+	@GetMapping("/registrform")
+	public String Login(Model m){
+		m.addAttribute("registtion", new User());
+		return "register";
+	}
+
+
+
+
 
 	@PostMapping("/addingUser")
 	public String  addUser(@ModelAttribute User user)
