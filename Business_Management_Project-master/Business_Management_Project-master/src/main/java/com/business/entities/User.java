@@ -2,6 +2,7 @@ package com.business.entities;
 
 import java.util.List;
 
+import jdk.jfr.DataAmount;
 import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -24,6 +25,9 @@ public class User
 	private String uemail;
 	private String upassword;
 	private Long unumber;
+	private String dob;
+
+
 	
 @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	private List<Orders> orders;
@@ -66,12 +70,21 @@ public class User
 	public void setUnumber(Long unumber) {
 		this.unumber = unumber;
 	}
+
+	public String getDob() {
+		return dob;
+	}
+
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+
 	@Override
 	public String toString() {
 		return "User [u_id=" + u_id + ", uname=" + uname + ", uemail=" + uemail + ", upassword=" + upassword
 				+ ", unumber=" + unumber + ", orders=" + orders + "]";
 	}
-	
+
 
 
 
