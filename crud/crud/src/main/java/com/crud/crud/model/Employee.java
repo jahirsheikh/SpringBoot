@@ -27,5 +27,11 @@ public class Employee {
     @Column()
     private String cellNo;
 
+    @ManyToOne
+    @JoinColumn(
+            name = "dep_id"
+    )
+    private Department department;
+
 
 }
