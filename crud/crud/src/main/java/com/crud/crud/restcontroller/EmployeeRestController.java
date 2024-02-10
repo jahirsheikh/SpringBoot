@@ -1,6 +1,8 @@
 package com.crud.crud.restcontroller;
 
+import com.crud.crud.model.Department;
 import com.crud.crud.model.Employee;
+import com.crud.crud.repository.IDepartmentRepository;
 import com.crud.crud.repository.IEmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,9 @@ public class EmployeeRestController {
     @Autowired
     IEmployeeRepository employeeRepository;
 
+    @Autowired
+    IDepartmentRepository departmentRepository;
+
 
 
     @GetMapping("/employee")
@@ -28,6 +33,9 @@ public class EmployeeRestController {
     @PostMapping("/employee")
     public  Employee saveEmployee(@RequestBody Employee employee){
 
+        String dName = employee.getDepartment().getDname();
+        Department department= departmentRepository.findBydname(dName);
+        employee.setDepartment(department);
         return employeeRepository.save(employee);
     }
 

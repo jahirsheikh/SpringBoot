@@ -26,5 +26,7 @@ public class Department {
     @Column()
     private String daddress;
 
-
+    public Department(String dname) {
+        this.dname = dname;
+    }
 }
